@@ -29,7 +29,7 @@ const App: React.FC = () => {
 
   const handleAddToCart = (product: Product) => {
     const existingItemIndex = cartItems.findIndex((item) => item.id === product.id);
-  
+
     if (existingItemIndex !== -1) {
       const updatedCartItems = [...cartItems];
       updatedCartItems[existingItemIndex].quantity++;
@@ -112,11 +112,28 @@ const App: React.FC = () => {
           </div>
         </nav>
 
+        <div className="relative h-screen">
+          <img src="/img/Frame 1.png" alt="Imagem de fundo" className="absolute inset-0 mx-auto object-cover" style={{ borderRadius: '80px', width: '80%', height: '60%', marginTop: '1%' }} />
+          <div className="absolute inset-0 mx-auto flex justify-center items-center" style={{ backgroundColor: '#FFEBC1', marginTop: '6%', width: '70%', height: '65%', borderRadius: '80px', backdropFilter: 'blur(2px)', opacity: '0.8' }}>
+            <div className="flex justify-center items-center w-20 h-20 bg-white rounded-full overflow-hidden">
+              <img src="/caminho/para/sua/imagem.jpg" alt="Imagem" className="w-full h-full object-cover" />
+            </div>
+          </div>
+          <div className="absolute inset-0 flex" style={{ marginTop: '2%' }}>
+            <div className="container mx-auto flex justify-between text-black" style={{ width: '65%' }}>
+              <h1 className="text-3xl mb-4">Comprar</h1>
+              <h1 className="text-4xl font-bold mb-4">Produto</h1>
+              <h1 className="text-3xl mb-4">Proximo</h1>
+            </div>
+          </div>
+        </div>
+
+
         <Routes>
           <Route path="/produtos/:productId" element={<ProductDetailsPage products={products} handleAddToCart={handleAddToCart} />} />
           <Route
             path="/favoritos"
-            element={<FavoritesPage favorites={favorites} />} // Corrija esta linha para passar as props corretamente
+            element={<FavoritesPage favorites={favorites} />}
           />
           <Route
             path="/"
