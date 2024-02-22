@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaHeart, FaShoppingCart, FaSignInAlt } from 'react-icons/fa';
 import './index.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import ProductDetailsPage from './assets/ProductDetailsPage';
 
 // Defina o tipo Product com a propriedade description
@@ -10,13 +10,20 @@ interface Product {
   name: string;
   price: number;
   image: string;
-  quantity: number; 
+  quantity: number;
   description?: string; // Propriedade description opcional
 }
 
 const App: React.FC = () => {
   const [cartVisible, setCartVisible] = useState(false);
   const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [cartItemCount, setCartItemCount] = useState(0);
+
+  useEffect(() => {
+    // Atualizar o número total de itens no carrinho sempre que o carrinho mudar
+    const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+    setCartItemCount(totalItems);
+  }, [cartItems]);
 
   const handleCartClick = () => {
     setCartVisible(!cartVisible);
@@ -70,33 +77,58 @@ const App: React.FC = () => {
                 />
               </div>
             </div>
-    
+
             <ul className="flex space-x-4">
-              <li><a href="/" className="hover:text-gray-400">Home</a></li>
-              <li><a href="/produtos" className="hover:text-gray-400">Produtos</a></li>
+              <li><Link to="/" className="hover:text-gray-400">Home</Link></li>
+              <li><Link to="/produtos" className="hover:text-gray-400">Produtos</Link></li>
             </ul>
             <div className="flex items-center space-x-4">
               <FaHeart />
-              <FaShoppingCart onClick={handleCartClick} style={{ cursor: 'pointer' }} />
+              <div className="relative">
+                <FaShoppingCart onClick={handleCartClick} style={{ cursor: 'pointer' }} />
+                {cartItemCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs">{cartItemCount}</span>
+                )}
+              </div>
               <FaSignInAlt />
             </div>
           </div>
         </nav>
-    
-        <section className="container mx-auto py-8">
-          <h2 className="text-2xl font-semibold mb-4">Produtos</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {products.map((product) => (
-              <div key={product.id} className="bg-white p-4 rounded-lg shadow">
-                <img src={product.image} alt={product.name} className="w-full h-100 object-cover mb-4 rounded-lg" />
-                <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-                <p className="text-gray-600">R$ {product.price}</p>
-                <button onClick={() => handleAddToCart(product)} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Comprar</button>
+
+        <Routes>
+          <Route path="/produtos/:productId" element={<ProductDetailsPage products={products} />} />
+          <Route
+            path="/"
+            element={
+              <div>
+                <section className="container mx-auto py-8">
+                  <h2 className="text-2xl font-semibold mb-4">Produtos</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {products.map((product) => (
+                      <div key={product.id} className="bg-white p-4 rounded-lg shadow cursor-pointer">
+                        <Link to={`/produtos/${product.id}`}>
+                          <img src={product.image} alt={product.name} className="w-full h-100 object-cover mb-4 rounded-lg" />
+                          <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
+                          <p className="text-gray-600">R$ {product.price}</p>
+                        </Link>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation(); // Evita a propagação do evento de clique para o elemento pai
+                            handleAddToCart(product);
+                          }}
+                          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                        >
+                          Comprar
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </section>
               </div>
-            ))}
-          </div>
-        </section>
-    
+            }
+          />
+        </Routes>
+
         {cartVisible && (
           <div className="fixed top-16 right-0 h-full w-1/3 bg-white z-50 shadow p-4">
             <div className="flex justify-between items-center mb-4">
@@ -138,11 +170,6 @@ const App: React.FC = () => {
             )}
           </div>
         )}
-
-        {/* Defina as rotas para a página de detalhes do produto */}
-        <Routes>
-          <Route path="/produtos/:productId" element={<ProductDetailsPage products={products} />} />
-        </Routes>
       </div>
     </Router>
   );
