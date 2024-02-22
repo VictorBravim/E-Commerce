@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaHeart, FaShoppingCart, FaSignInAlt } from 'react-icons/fa';
+import { FaHeart, FaShoppingCart, FaBoxes } from 'react-icons/fa';
 import './index.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import ProductDetailsPage from './assets/ProductDetailsPage';
@@ -62,33 +62,30 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <div className="bg-gray-200 min-h-screen">
-        <nav className="bg-gray-800 text-white p-4">
+      <div className="min-h-screen">
+        <nav className="text-black p-8">
           <div className="container mx-auto flex justify-between items-center">
-            <h1 className="text-xl font-semibold">FastSale</h1>
-            <div className="flex items-center justify-center">
-              <div className="flex items-center">
-                <input
-                  type="text"
-                  placeholder="Pesquisar..."
-                  className="px-10 pl-2 py-1 bg-gray-700 text-white rounded focus:outline-none text-left"
-                />
+            <div className="flex items-center space-x-2">
+            <div style={{ border: '2px solid white', borderRadius: '50%', padding: '10px' }}>
+              <div style={{ fontSize: '34px' }}><FaBoxes /></div>
               </div>
+              <Link to="/"><h1 className="text-xl font-semibold" style={{ fontSize: '34px' }}>FastSale</h1></Link>
             </div>
-
             <ul className="flex space-x-4">
-              <li><Link to="/" className="hover:text-gray-400">Home</Link></li>
-              <li><Link to="/produtos" className="hover:text-gray-400">Produtos</Link></li>
+              <li><Link to="/" className="hover:text-gray-400 font-semibold" style={{ fontSize: '24px' }}>Home</Link></li>
+              <li><Link to="/produtos" className="hover:text-gray-400 font-semibold" style={{ fontSize: '24px' }}>Produtos</Link></li>
+              <li><Link to="/contato" className="hover:text-gray-400 font-semibold" style={{ fontSize: '24px' }}>Contato</Link></li>
             </ul>
             <div className="flex items-center space-x-4">
-              <FaHeart />
+              <div style={{ fontSize: '24px' }}><FaHeart /></div>
               <div className="relative">
-                <FaShoppingCart onClick={handleCartClick} style={{ cursor: 'pointer' }} />
+                <div style={{ border: '2px solid white', borderRadius: '50%', padding: '10px' }}>
+                  <FaShoppingCart onClick={handleCartClick} style={{ cursor: 'pointer', fontSize: '24px' }} />
+                </div>
                 {cartItemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs">{cartItemCount}</span>
+                  <span className="absolute -top-1 -right-1 bg-yellow-500 text-black rounded-full w-4 h-4 flex items-center justify-center text-xs" >{cartItemCount}</span>
                 )}
               </div>
-              <FaSignInAlt />
             </div>
           </div>
         </nav>
