@@ -14,18 +14,14 @@ interface Product {
 }
 
 const App: React.FC = () => {
-  const [cartVisible, setCartVisible] = useState(false);
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [cartItemCount, setCartItemCount] = useState(0);
+  const [isCartOpen, setIsCartOpen] = useState(false); // State para controlar a visibilidade do carrinho
 
   useEffect(() => {
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
     setCartItemCount(totalItems);
   }, [cartItems]);
-
-  const handleCartClick = () => {
-    setCartVisible(!cartVisible);
-  };
 
   const handleAddToCart = (product: Product) => {
     const existingItemIndex = cartItems.findIndex((item) => item.id === product.id);
@@ -50,8 +46,8 @@ const App: React.FC = () => {
     setCartItems(updatedCartItems);
   };
 
-  const handleCloseCart = () => {
-    setCartVisible(false);
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen); // Função para alternar a visibilidade do carrinho
   };
 
   const products: Product[] = [
@@ -66,8 +62,8 @@ const App: React.FC = () => {
         <nav className="text-black p-8">
           <div className="container mx-auto flex justify-between items-center">
             <div className="flex items-center space-x-2">
-            <div style={{ border: '2px solid white', borderRadius: '50%', padding: '10px' }}>
-              <div style={{ fontSize: '34px' }}><FaBoxes /></div>
+              <div style={{ border: '2px solid white', borderRadius: '50%', padding: '10px' }}>
+                <div style={{ fontSize: '34px' }}><FaBoxes /></div>
               </div>
               <Link to="/"><h1 className="text-xl font-semibold" style={{ fontSize: '34px' }}>FastSale</h1></Link>
             </div>
@@ -80,10 +76,43 @@ const App: React.FC = () => {
               <div style={{ fontSize: '24px' }}><FaHeart /></div>
               <div className="relative">
                 <div style={{ border: '2px solid white', borderRadius: '50%', padding: '10px' }}>
-                  <FaShoppingCart onClick={handleCartClick} style={{ cursor: 'pointer', fontSize: '24px' }} />
+                  <FaShoppingCart style={{ cursor: 'pointer', fontSize: '24px' }} onClick={toggleCart} />
                 </div>
                 {cartItemCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-yellow-500 text-black rounded-full w-4 h-4 flex items-center justify-center text-xs" >{cartItemCount}</span>
+                )}
+                {/* Adicionando a lógica de visibilidade do carrinho aqui */}
+                {isCartOpen && (
+                  <div className="absolute right-0 mt-8 w-64 bg-white shadow-lg rounded-lg">
+                    <ul className="divide-y divide-gray-200">
+                      {cartItems.map((item, index) => (
+                        <li key={index} className="flex justify-between items-center p-2">
+                          <div className="flex items-center space-x-2">
+                            <img src={item.image} alt={item.name} className="w-8 h-8" />
+                            <span>{item.name}</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <span>{item.quantity}</span>
+                            <button onClick={() => handleRemoveFromCart(index)} className="text-gray-600 hover:text-gray-800">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                              </svg>
+                            </button>
+                            <button onClick={() => handleAddToCart(item)} className="text-gray-600 hover:text-gray-800">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                              </svg>
+                            </button>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                    {cartItems.length > 0 && (
+                      <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 w-full">
+                        Checkout
+                      </button>
+                    )}
+                  </div>
                 )}
               </div>
             </div>
@@ -123,47 +152,6 @@ const App: React.FC = () => {
             }
           />
         </Routes>
-
-        {cartVisible && (
-          <div className="fixed top-16 right-0 h-full w-1/3 bg-white z-50 shadow p-4">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold">Carrinho</h2>
-              <button onClick={handleCloseCart} className="text-gray-600 hover:text-gray-800">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <ul>
-              {cartItems.map((item, index) => (
-                <li key={index} className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <img src={item.image} alt={item.name} className="w-8 h-8 mr-2" />
-                    <span>{item.name} - R$ {item.price}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <button onClick={() => handleRemoveFromCart(index)} className="text-gray-600 hover:text-gray-800 mr-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-                      </svg>
-                    </button>
-                    <span>{item.quantity}</span>
-                    <button onClick={() => handleAddToCart(item)} className="text-gray-600 hover:text-gray-800 ml-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                      </svg>
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            {cartItems.length > 0 && (
-              <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-                Checkout
-              </button>
-            )}
-          </div>
-        )}
       </div>
     </Router>
   );
