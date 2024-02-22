@@ -67,7 +67,7 @@ const App: React.FC = () => {
       <div className="bg-gray-200 min-h-screen">
         <nav className="bg-gray-800 text-white p-4">
           <div className="container mx-auto flex justify-between items-center">
-            <h1 className="text-xl font-semibold">Minha Loja</h1>
+            <h1 className="text-xl font-semibold">FastSale</h1>
             <div className="flex items-center justify-center">
               <div className="flex items-center">
                 <input
