@@ -4,14 +4,13 @@ import './index.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import ProductDetailsPage from './assets/ProductDetailsPage';
 
-// Defina o tipo Product com a propriedade description
 interface Product {
   id: number;
   name: string;
   price: number;
   image: string;
   quantity: number;
-  description?: string; // Propriedade description opcional
+  description?: string;
 }
 
 const App: React.FC = () => {
@@ -20,7 +19,6 @@ const App: React.FC = () => {
   const [cartItemCount, setCartItemCount] = useState(0);
 
   useEffect(() => {
-    // Atualizar o número total de itens no carrinho sempre que o carrinho mudar
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
     setCartItemCount(totalItems);
   }, [cartItems]);
@@ -113,7 +111,7 @@ const App: React.FC = () => {
                         </Link>
                         <button
                           onClick={(e) => {
-                            e.stopPropagation(); // Evita a propagação do evento de clique para o elemento pai
+                            e.stopPropagation();
                             handleAddToCart(product);
                           }}
                           className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
@@ -162,7 +160,6 @@ const App: React.FC = () => {
                 </li>
               ))}
             </ul>
-            {/* Condicional para renderizar o botão de checkout somente se houver itens no carrinho */}
             {cartItems.length > 0 && (
               <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
                 Checkout
