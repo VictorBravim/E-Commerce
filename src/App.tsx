@@ -1,8 +1,11 @@
+// App.tsx
+
 import React, { useState, useEffect } from 'react';
 import { FaHeart, FaShoppingCart, FaBoxes } from 'react-icons/fa';
-import './index.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import './index.css';
 import ProductDetailsPage from './assets/ProductDetailsPage';
+import FavoritesPage from './assets/FavoritesPage'; // Importe a página de favoritos
 
 interface Product {
   id: number;
@@ -16,7 +19,8 @@ interface Product {
 const App: React.FC = () => {
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [cartItemCount, setCartItemCount] = useState(0);
-  const [isCartOpen, setIsCartOpen] = useState(false); // State para controlar a visibilidade do carrinho
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [favorites, setFavorites] = useState<Product[]>([]);
 
   useEffect(() => {
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
@@ -25,7 +29,7 @@ const App: React.FC = () => {
 
   const handleAddToCart = (product: Product) => {
     const existingItemIndex = cartItems.findIndex((item) => item.id === product.id);
-
+  
     if (existingItemIndex !== -1) {
       const updatedCartItems = [...cartItems];
       updatedCartItems[existingItemIndex].quantity++;
@@ -35,19 +39,8 @@ const App: React.FC = () => {
     }
   };
 
-  const handleRemoveFromCart = (index: number) => {
-    const updatedCartItems = [...cartItems];
-    updatedCartItems[index].quantity--;
-
-    if (updatedCartItems[index].quantity === 0) {
-      updatedCartItems.splice(index, 1);
-    }
-
-    setCartItems(updatedCartItems);
-  };
-
-  const toggleCart = () => {
-    setIsCartOpen(!isCartOpen); // Função para alternar a visibilidade do carrinho
+  const handleAddToFavorites = (product: Product) => {
+    setFavorites([...favorites, product]);
   };
 
   const products: Product[] = [
@@ -73,15 +66,14 @@ const App: React.FC = () => {
               <li><Link to="/contato" className="hover:text-gray-400 font-semibold" style={{ fontSize: '24px' }}>Contato</Link></li>
             </ul>
             <div className="flex items-center space-x-4">
-              <div style={{ fontSize: '24px' }}><FaHeart /></div>
+              <Link to="/favoritos" style={{ fontSize: '24px' }}><FaHeart /></Link>
               <div className="relative">
                 <div style={{ border: '2px solid white', borderRadius: '50%', padding: '10px' }}>
-                  <FaShoppingCart style={{ cursor: 'pointer', fontSize: '24px' }} onClick={toggleCart} />
+                  <FaShoppingCart style={{ cursor: 'pointer', fontSize: '24px' }} onClick={() => setIsCartOpen(!isCartOpen)} />
                 </div>
                 {cartItemCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-yellow-500 text-black rounded-full w-4 h-4 flex items-center justify-center text-xs" >{cartItemCount}</span>
                 )}
-                {/* Adicionando a lógica de visibilidade do carrinho aqui */}
                 {isCartOpen && (
                   <div className="absolute right-0 mt-8 w-64 bg-white shadow-lg rounded-lg">
                     <ul className="divide-y divide-gray-200">
@@ -93,7 +85,8 @@ const App: React.FC = () => {
                           </div>
                           <div className="flex items-center space-x-2">
                             <span>{item.quantity}</span>
-                            <button onClick={() => handleRemoveFromCart(index)} className="text-gray-600 hover:text-gray-800">
+                            {/* Implementação da função handleRemoveFromCart */}
+                            <button onClick={() => setCartItems(cartItems.filter((_, i) => i !== index))} className="text-gray-600 hover:text-gray-800">
                               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
                               </svg>
@@ -120,7 +113,11 @@ const App: React.FC = () => {
         </nav>
 
         <Routes>
-          <Route path="/produtos/:productId" element={<ProductDetailsPage products={products} />} />
+          <Route path="/produtos/:productId" element={<ProductDetailsPage products={products} handleAddToCart={handleAddToCart} />} />
+          <Route
+            path="/favoritos"
+            element={<FavoritesPage favorites={favorites} />} // Corrija esta linha para passar as props corretamente
+          />
           <Route
             path="/"
             element={
@@ -143,6 +140,12 @@ const App: React.FC = () => {
                           className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
                         >
                           Comprar
+                        </button>
+                        <button
+                          onClick={() => handleAddToFavorites(product)}
+                          className="mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+                        >
+                          <FaHeart />
                         </button>
                       </div>
                     ))}
