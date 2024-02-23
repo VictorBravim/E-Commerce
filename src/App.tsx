@@ -5,7 +5,7 @@ import { FaHeart, FaShoppingCart, FaBoxes } from 'react-icons/fa';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './index.css';
 import ProductDetailsPage from './assets/ProductDetailsPage';
-import FavoritesPage from './assets/FavoritesPage'; // Importe a página de favoritos
+import FavoritesPage from './assets/FavoritesPage';
 
 interface Product {
   id: number;
@@ -39,6 +39,16 @@ const App: React.FC = () => {
     }
   };
 
+  const handleRemoveFromCart = (index: number) => {
+    const updatedCartItems = [...cartItems];
+    updatedCartItems[index].quantity--;
+    if (updatedCartItems[index].quantity === 0) {
+      updatedCartItems.splice(index, 1); // Remove o item do carrinho se a quantidade for zero
+    }
+    setCartItems(updatedCartItems);
+  };
+
+
   const handleAddToFavorites = (product: Product) => {
     setFavorites([...favorites, product]);
   };
@@ -52,6 +62,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="min-h-screen">
+        {/* Navegação */}
         <nav className="text-black p-8">
           <div className="container mx-auto flex justify-between items-center">
             <div className="flex items-center space-x-2">
@@ -75,7 +86,7 @@ const App: React.FC = () => {
                   <span className="absolute -top-1 -right-1 bg-yellow-500 text-black rounded-full w-4 h-4 flex items-center justify-center text-xs" >{cartItemCount}</span>
                 )}
                 {isCartOpen && (
-                  <div className="absolute right-0 mt-8 w-64 bg-white shadow-lg rounded-lg">
+                  <div className="absolute right-0 mt-8 w-64 bg-white shadow-lg rounded-lg z-10">
                     <ul className="divide-y divide-gray-200">
                       {cartItems.map((item, index) => (
                         <li key={index} className="flex justify-between items-center p-2">
@@ -85,8 +96,7 @@ const App: React.FC = () => {
                           </div>
                           <div className="flex items-center space-x-2">
                             <span>{item.quantity}</span>
-                            {/* Implementação da função handleRemoveFromCart */}
-                            <button onClick={() => setCartItems(cartItems.filter((_, i) => i !== index))} className="text-gray-600 hover:text-gray-800">
+                            <button onClick={() => handleRemoveFromCart(index)} className="text-gray-600 hover:text-gray-800">
                               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
                               </svg>
@@ -112,33 +122,52 @@ const App: React.FC = () => {
           </div>
         </nav>
 
-        <div className="relative h-screen">
-          <img src="/img/Frame 1.png" alt="Imagem de fundo" className="absolute inset-0 mx-auto object-cover" style={{ borderRadius: '80px', width: '80%', height: '60%', marginTop: '1%' }} />
-          <div className="absolute inset-0 mx-auto flex justify-center items-center" style={{ backgroundColor: '#FFEBC1', marginTop: '6%', width: '70%', height: '65%', borderRadius: '80px', backdropFilter: 'blur(2px)', opacity: '0.8' }}>
-            <div className="flex justify-center items-center w-20 h-20 bg-white rounded-full overflow-hidden">
-              <img src="/caminho/para/sua/imagem.jpg" alt="Imagem" className="w-full h-full object-cover" />
-            </div>
-          </div>
-          <div className="absolute inset-0 flex" style={{ marginTop: '2%' }}>
-            <div className="container mx-auto flex justify-between text-black" style={{ width: '65%' }}>
-              <h1 className="text-3xl mb-4">Comprar</h1>
-              <h1 className="text-4xl font-bold mb-4">Produto</h1>
-              <h1 className="text-3xl mb-4">Proximo</h1>
-            </div>
-          </div>
-        </div>
-
-
+        {/* Rotas */}
         <Routes>
-          <Route path="/produtos/:productId" element={<ProductDetailsPage products={products} handleAddToCart={handleAddToCart} />} />
-          <Route
-            path="/favoritos"
-            element={<FavoritesPage favorites={favorites} />}
-          />
+          {/* Página principal */}
           <Route
             path="/"
             element={
               <div>
+                {/* Seção de descrição do produto */}
+                <div className="relative h-screen">
+                  <img src="/img/Frame 1.png" alt="Imagem de fundo" className="absolute inset-0 mx-auto object-cover" style={{ borderRadius: '80px', width: '80%', height: '60%', marginTop: '1%' }} />
+                  <div className="absolute inset-0 mx-auto flex justify-center items-center" style={{ backgroundColor: '#fff', marginTop: '8%', width: '70%', height: '65%', borderRadius: '80px', opacity: '1' }}>
+                    {/* Descrição do Produto */}
+                    <div className="container mx-auto w-1/4 text-center text-black">
+                      <h2 className="text-2xl font-semibold mb-4">Descrição do Produto</h2>
+                      <p className="text-lg mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis scelerisque ex ut augue congue.</p>
+                    </div>
+                    {/* Imagem do Produto */}
+                    <div className="flex justify-center items-center w-1/3">
+                      <div className="w-50 h-50 rounded-full overflow-hidden" style={{ background: '#' }}>
+                        <img src="/img/tenis.png" alt="Imagem" className="object-cover" />
+                      </div>
+                    </div>
+                    {/* Informações adicionais do Produto */}
+                    <div className="w-1/3 flex flex-col justify-center items-center">
+                      <h2 className="text-2xl font-semibold mb-4">Preço</h2>
+                      <p className="text-lg mb-4">R$ 99,99</p>
+                      {/* Seletor de cores */}
+                      <div className="flex items-center justify-between w-32">
+                        <div className="bg-red-500 w-8 h-8 rounded-full"></div>
+                        <div className="bg-blue-500 w-8 h-8 rounded-full"></div>
+                        <div className="bg-green-500 w-8 h-8 rounded-full"></div>
+                      </div>
+                      <div className="w-1/3 text-center">
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mt-4">Comprar</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 flex" style={{ marginTop: '3.5%' }}>
+                    <div className="container mx-auto flex justify-between text-black" style={{ width: '65%' }}>
+                      <h1 className="text-3xl mb-4">Comprar</h1>
+                      <h1 className="text-4xl font-bold mb-4">Produto</h1>
+                      <h1 className="text-3xl mb-4">Proximo</h1>
+                    </div>
+                  </div>
+                </div>
+                {/* Seção de produtos */}
                 <section className="container mx-auto py-8">
                   <h2 className="text-2xl font-semibold mb-4">Produtos</h2>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -171,9 +200,13 @@ const App: React.FC = () => {
               </div>
             }
           />
+          {/* Outras rotas */}
+          <Route path="/produtos/:productId" element={<ProductDetailsPage products={products} handleAddToCart={handleAddToCart} />} />
+          <Route path="/favoritos" element={<FavoritesPage favorites={favorites} />} />
         </Routes>
       </div>
     </Router>
+
   );
 }
 
