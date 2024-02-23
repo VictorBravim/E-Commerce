@@ -17,15 +17,29 @@ interface Product {
 }
 
 const App: React.FC = () => {
-  const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [cartItems, setCartItems] = useState<Product[]>(() => {
+    const savedCartItems = localStorage.getItem('cartItems');
+    return savedCartItems ? JSON.parse(savedCartItems) : [];
+  });
   const [cartItemCount, setCartItemCount] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [favorites, setFavorites] = useState<Product[]>([]);
+  const [favorites, setFavorites] = useState<Product[]>(() => {
+    const savedFavorites = localStorage.getItem('favorites');
+    return savedFavorites ? JSON.parse(savedFavorites) : [];
+  });
 
   useEffect(() => {
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
     setCartItemCount(totalItems);
   }, [cartItems]);
+
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }, [favorites]);
 
   const handleAddToCart = (product: Product) => {
     const existingItemIndex = cartItems.findIndex((item) => item.id === product.id);
@@ -48,7 +62,6 @@ const App: React.FC = () => {
     setCartItems(updatedCartItems);
   };
 
-
   const handleAddToFavorites = (product: Product) => {
     // Verifica se o produto já está na lista de favoritos
     const isProductInFavorites = favorites.some((favProduct) => favProduct.id === product.id);
@@ -58,8 +71,12 @@ const App: React.FC = () => {
       setFavorites([...favorites, product]);
     }
   };
-  
 
+  const handleRemoveFavorite = (id: number) => {
+    const updatedFavorites = favorites.filter((favorite) => favorite.id !== id);
+    setFavorites(updatedFavorites);
+  };
+  
   const products: Product[] = [
     { id: 1, name: 'Produto 1', price: 10, image: "/img/teste.webp", quantity: 0 },
     { id: 2, name: 'Produto 2', price: 15, image: "/img/teste.webp", quantity: 0 },
@@ -209,7 +226,7 @@ const App: React.FC = () => {
           />
           {/* Outras rotas */}
           <Route path="/produtos/:productId" element={<ProductDetailsPage products={products} handleAddToCart={handleAddToCart} />} />
-          <Route path="/favoritos" element={<FavoritesPage favorites={favorites} />} />
+          <Route path="/favoritos" element={<FavoritesPage favorites={favorites} onRemoveFavorite={handleRemoveFavorite} />} />
         </Routes>
       </div>
     </Router>
