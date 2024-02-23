@@ -24,3 +24,4 @@
     "src"
   ]
 }
+// Remove o item do carrinho se a quantidade for zero
