@@ -50,8 +50,15 @@ const App: React.FC = () => {
 
 
   const handleAddToFavorites = (product: Product) => {
-    setFavorites([...favorites, product]);
+    // Verifica se o produto já está na lista de favoritos
+    const isProductInFavorites = favorites.some((favProduct) => favProduct.id === product.id);
+    
+    // Se o produto não estiver na lista de favoritos, adiciona-o
+    if (!isProductInFavorites) {
+      setFavorites([...favorites, product]);
+    }
   };
+  
 
   const products: Product[] = [
     { id: 1, name: 'Produto 1', price: 10, image: "/img/teste.webp", quantity: 0 },
