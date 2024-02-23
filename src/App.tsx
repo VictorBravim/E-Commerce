@@ -1,5 +1,3 @@
-// App.tsx
-
 import React, { useState, useEffect } from 'react';
 import { FaHeart, FaShoppingCart, FaBoxes } from 'react-icons/fa';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
@@ -57,16 +55,14 @@ const App: React.FC = () => {
     const updatedCartItems = [...cartItems];
     updatedCartItems[index].quantity--;
     if (updatedCartItems[index].quantity === 0) {
-      updatedCartItems.splice(index, 1); // Remove o item do carrinho se a quantidade for zero
+      updatedCartItems.splice(index, 1); 
     }
     setCartItems(updatedCartItems);
   };
 
   const handleAddToFavorites = (product: Product) => {
-    // Verifica se o produto já está na lista de favoritos
     const isProductInFavorites = favorites.some((favProduct) => favProduct.id === product.id);
     
-    // Se o produto não estiver na lista de favoritos, adiciona-o
     if (!isProductInFavorites) {
       setFavorites([...favorites, product]);
     }
@@ -86,7 +82,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="min-h-screen">
-        {/* Navegação */}
+        {/* Nav */}
         <nav className="text-black p-8">
           <div className="container mx-auto flex justify-between items-center">
             <div className="flex items-center space-x-2">
@@ -146,9 +142,7 @@ const App: React.FC = () => {
           </div>
         </nav>
 
-        {/* Rotas */}
         <Routes>
-          {/* Página principal */}
           <Route
             path="/"
             element={
@@ -224,7 +218,7 @@ const App: React.FC = () => {
               </div>
             }
           />
-          {/* Outras rotas */}
+          {/* rotas */}
           <Route path="/produtos/:productId" element={<ProductDetailsPage products={products} handleAddToCart={handleAddToCart} />} />
           <Route path="/favoritos" element={<FavoritesPage favorites={favorites} onRemoveFavorite={handleRemoveFavorite} />} />
         </Routes>

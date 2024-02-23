@@ -1,6 +1,5 @@
 import React from 'react';
 
-// Defina o tipo Product
 interface Product {
   id: number;
   name: string;
@@ -10,20 +9,18 @@ interface Product {
   description?: string;
 }
 
-// Defina as propriedades esperadas pelo componente FavoritesPage
 interface FavoritesPageProps {
   favorites: Product[];
-  onRemoveFavorite: (id: number) => void; // Função para remover um favorito
+  onRemoveFavorite: (id: number) => void; 
 }
 
 const FavoritesPage: React.FC<FavoritesPageProps> = ({ favorites, onRemoveFavorite }) => {
   return (
     <div>
-      {/* Renderize a lista de favoritos aqui */}
       <ul>
         {favorites.map((favorite) => (
           <li key={favorite.id}>
-            <div onClick={() => onRemoveFavorite(favorite.id)}> {/* Remover favorito ao clicar */}
+            <div onClick={() => onRemoveFavorite(favorite.id)}> 
               <img src={favorite.image} alt={favorite.name} style={{ width: '100px', height: '100px' }} />
             </div>
             <div>
