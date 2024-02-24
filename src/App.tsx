@@ -4,8 +4,9 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './index.css';
 import ProductDetailsPage from './assets/ProductDetailsPage';
 import FavoritesPage from './assets/FavoritesPage';
+import CheckoutPage from './assets/CheckoutPage';
 
-interface Product {
+export interface Product {
   id: number;
   name: string;
   price: number;
@@ -164,7 +165,7 @@ const App: React.FC = () => {
                     </ul>
                     {cartItems.length > 0 && (
                       <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 w-full">
-                        Checkout
+                       <Link to="/checkout">Comprar</Link>
                       </button>
                     )}
                   </div>
@@ -274,6 +275,8 @@ const App: React.FC = () => {
             path="/favoritos"
             element={<FavoritesPage favorites={favorites} onRemoveFavorite={handleRemoveFavorite} onAddToCart={handleAddToCart} />}
           />
+          
+          <Route path="/checkout" element={<CheckoutPage cartItems={cartItems} />} />
         </Routes>
       </div>
     </Router>

@@ -1,46 +1,36 @@
 import React from 'react';
-import { FaHeart, FaShoppingCart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  quantity: number;
-  description?: string;
+interface CheckoutPageProps {
+  cartItems: {
+    id: number;
+    name: string;
+    price: number;
+    image: string;
+    quantity: number;
+    description?: string;
+  }[];
 }
 
-interface FavoritesPageProps {
-  favorites: Product[];
-  onRemoveFavorite: (id: number) => void; 
-  onAddToCart: (product: Product) => void; // Adicionando a propriedade onAddToCart
-}
-
-const FavoritesPage: React.FC<FavoritesPageProps> = ({ favorites, onRemoveFavorite, onAddToCart }) => {
+const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems }) => {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      {favorites.map((favorite) => (
-        <div key={favorite.id} style={{ margin: '10px', textAlign: 'center' }}>
-          <div onClick={() => onRemoveFavorite(favorite.id)}> 
-            <img src={favorite.image} alt={favorite.name} style={{ width: '100px', height: '100px' }} />
+    <div>
+      <h1>Checkout</h1>
+      <div>
+        {cartItems.map((item) => (
+          <div key={item.id}>
+            <img src={item.image} alt={item.name} />
+            <div>{item.name}</div>
+            <div>R$ {item.price}</div>
           </div>
-          <div>
-            <p>{favorite.name}</p>
-            <p>Preço: R$ {favorite.price}</p>
-          </div>
-          <div style={{ marginTop: '10px' }}>
-            <button onClick={() => onAddToCart(favorite)} style={{ marginRight: '10px' }} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors duration-300">
-              Comprar
-            </button>
-            <button onClick={() => onRemoveFavorite(favorite.id)}>
-              <FaHeart />
-            </button>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
+      <div>
+        <Link to="/">Voltar para a Loja</Link>
+        <button>Finalizar Compra</button>
+      </div>
     </div>
   );
-}
+};
 
-export default FavoritesPage;
+export default CheckoutPage;
