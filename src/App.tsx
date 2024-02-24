@@ -73,6 +73,10 @@ const App: React.FC = () => {
     setCartItems(updatedCartItems);
   };
 
+  const handleCloseCart = () => {
+    setIsCartOpen(false);
+  };
+  
   const handleAddToFavorites = (product: Product) => {
     const isProductInFavorites = favorites.some((favProduct) => favProduct.id === product.id);
 
@@ -90,8 +94,6 @@ const App: React.FC = () => {
       }, 1000);
     }
   };
-
-
 
   const handleRemoveFavorite = (id: number) => {
     const updatedFavorites = favorites.filter((favorite) => favorite.id !== id);
@@ -276,7 +278,7 @@ const App: React.FC = () => {
             element={<FavoritesPage favorites={favorites} onRemoveFavorite={handleRemoveFavorite} onAddToCart={handleAddToCart} />}
           />
           
-          <Route path="/checkout" element={<CheckoutPage cartItems={cartItems} />} />
+          <Route path="/checkout" element={<CheckoutPage cartItems={cartItems} closeCart={handleCloseCart} />} />
         </Routes>
       </div>
     </Router>
