@@ -55,14 +55,14 @@ const App: React.FC = () => {
     const updatedCartItems = [...cartItems];
     updatedCartItems[index].quantity--;
     if (updatedCartItems[index].quantity === 0) {
-      updatedCartItems.splice(index, 1); 
+      updatedCartItems.splice(index, 1);
     }
     setCartItems(updatedCartItems);
   };
 
   const handleAddToFavorites = (product: Product) => {
     const isProductInFavorites = favorites.some((favProduct) => favProduct.id === product.id);
-    
+
     if (!isProductInFavorites) {
       setFavorites([...favorites, product]);
     }
@@ -72,18 +72,24 @@ const App: React.FC = () => {
     const updatedFavorites = favorites.filter((favorite) => favorite.id !== id);
     setFavorites(updatedFavorites);
   };
-  
+
   const products: Product[] = [
-    { id: 1, name: 'Produto 1', price: 10, image: "/img/teste.webp", quantity: 0 },
-    { id: 2, name: 'Produto 2', price: 15, image: "/img/teste.webp", quantity: 0 },
-    { id: 3, name: 'Produto 3', price: 20, image: "/img/teste.webp", quantity: 0 }
+    { id: 1, name: 'Produto 1', price: 10, image: "/img/tenis.png", quantity: 0 },
+    { id: 2, name: 'Produto 2', price: 15, image: "/img/tenis.png", quantity: 0 },
+    { id: 3, name: 'Produto 3', price: 20, image: "/img/tenis.png", quantity: 0 }
   ];
+
+  const [selectedColor, setSelectedColor] = useState<string>('');
+
+  const handleColorSelect = (color: string) => {
+    setSelectedColor(color);
+  };
 
   return (
     <Router>
       <div className="min-h-screen">
         {/* Nav */}
-        <nav className="text-black p-8">
+        <nav className="text-black p-8 bg-white" style={{ width: '100%', position: 'fixed', top: 0, zIndex: 999, padding: '10px 10% 0 10%' }}>
           <div className="container mx-auto flex justify-between items-center">
             <div className="flex items-center space-x-2">
               <div style={{ border: '2px solid white', borderRadius: '50%', padding: '10px' }}>
@@ -96,7 +102,7 @@ const App: React.FC = () => {
               <li><Link to="/produtos" className="hover:text-gray-400 font-semibold" style={{ fontSize: '24px' }}>Produtos</Link></li>
               <li><Link to="/contato" className="hover:text-gray-400 font-semibold" style={{ fontSize: '24px' }}>Contato</Link></li>
             </ul>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4" style={{ paddingLeft: '5%' }}>
               <Link to="/favoritos" style={{ fontSize: '24px' }}><FaHeart /></Link>
               <div className="relative">
                 <div style={{ border: '2px solid white', borderRadius: '50%', padding: '10px' }}>
@@ -148,7 +154,7 @@ const App: React.FC = () => {
             element={
               <div>
                 {/* Seção de descrição do produto */}
-                <div className="relative h-screen">
+                <div className="relative h-screen" style={{ marginTop: '8%' }}>
                   <img src="/img/Frame 1.png" alt="Imagem de fundo" className="absolute inset-0 mx-auto object-cover" style={{ borderRadius: '80px', width: '80%', height: '60%', marginTop: '1%' }} />
                   <div className="absolute inset-0 mx-auto flex justify-center items-center" style={{ backgroundColor: '#fff', marginTop: '8%', width: '70%', height: '65%', borderRadius: '80px', opacity: '1' }}>
                     {/* Descrição do Produto */}
@@ -168,16 +174,32 @@ const App: React.FC = () => {
                       <p className="text-lg mb-4">R$ 99,99</p>
                       {/* Seletor de cores */}
                       <div className="flex items-center justify-between w-32">
-                        <div className="bg-red-500 w-8 h-8 rounded-full"></div>
-                        <div className="bg-blue-500 w-8 h-8 rounded-full"></div>
-                        <div className="bg-green-500 w-8 h-8 rounded-full"></div>
+                        <div
+                          className={`bg-red-500 w-8 h-8 rounded-full ${selectedColor === 'red' ? 'border-2 border-black' : ''}`}
+                          onClick={() => handleColorSelect('red')}
+                        ></div>
+                        <div
+                          className={`bg-blue-500 w-8 h-8 rounded-full ${selectedColor === 'blue' ? 'border-2 border-black' : ''}`}
+                          onClick={() => handleColorSelect('blue')}
+                        ></div>
+                        <div
+                          className={`bg-green-500 w-8 h-8 rounded-full ${selectedColor === 'green' ? 'border-2 border-black' : ''}`}
+                          onClick={() => handleColorSelect('green')}
+                        ></div>
                       </div>
                       <div className="w-1/3 text-center">
-                        <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mt-4">Comprar</button>
+                        <button
+                          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mt-4"
+                          onClick={() => handleAddToCart({ id: 1, name: 'Produto 1', price: 10, image: "/img/tenis.png", quantity: 0 })}
+                        >
+                          Comprar
+                        </button>
+
                       </div>
                     </div>
+
                   </div>
-                  <div className="absolute inset-0 flex" style={{ marginTop: '3.5%' }}>
+                  <div className="absolute flex" style={{ width: '100%', marginTop: '3.5%' }}>
                     <div className="container mx-auto flex justify-between text-black" style={{ width: '65%' }}>
                       <h1 className="text-3xl mb-4">Comprar</h1>
                       <h1 className="text-4xl font-bold mb-4">Produto</h1>
@@ -185,32 +207,33 @@ const App: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                {/* Seção de produtos */}
-                <section className="container mx-auto py-8">
+                <section className="container mx-auto py-8" style={{ width: '80%' }}>
                   <h2 className="text-2xl font-semibold mb-4">Produtos</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {products.map((product) => (
-                      <div key={product.id} className="bg-white p-4 rounded-lg shadow cursor-pointer">
-                        <Link to={`/produtos/${product.id}`}>
-                          <img src={product.image} alt={product.name} className="w-full h-100 object-cover mb-4 rounded-lg" />
+                      <div key={product.id} className="bg-white p-6 rounded-lg shadow-md cursor-pointer flex flex-col justify-center items-center">
+                        <Link to={`/produtos/${product.id}`} className="block">
+                          <img src={product.image} alt={product.name} className="w-64 h-64 mb-4 rounded-lg" />
                           <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
                           <p className="text-gray-600">R$ {product.price}</p>
                         </Link>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleAddToCart(product);
-                          }}
-                          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-                        >
-                          Comprar
-                        </button>
-                        <button
-                          onClick={() => handleAddToFavorites(product)}
-                          className="mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-                        >
-                          <FaHeart />
-                        </button>
+                        <div className="flex justify-between w-full items-center mt-4">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleAddToCart(product);
+                            }}
+                            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors duration-300"
+                          >
+                            Comprar
+                          </button>
+                          <button
+                            onClick={() => handleAddToFavorites(product)}
+                            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors duration-300"
+                          >
+                            <FaHeart />
+                          </button>
+                        </div>
                       </div>
                     ))}
                   </div>

@@ -16,38 +16,35 @@ interface ProductDetailsPageProps {
 }
 
 const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({ products, handleAddToCart }) => {
-    const { productId } = useParams<{ productId?: string }>();
-    const parsedProductId = productId ? parseInt(productId) : undefined;
-    const product = parsedProductId !== undefined ? products.find((p) => p.id === parsedProductId) : undefined;
-  
-    if (!product) {
-      return <div>Produto não encontrado!</div>;
-    }
-  
-    const handleClickAddToCart = () => {
-      handleAddToCart(product);
-    };
-  
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '1200px', width: '900px', height: '52%', padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}>
-          <div style={{ display: 'flex', width: '100%', height: '100%' }}>
-            <img src={product.image} alt={product.name} style={{ width: '450px', height: '450px', marginRight: '20px' }} />
-            <div>
-              <h2>{product.name}</h2>
-              <p>Preço: R$ {product.price}</p>
-              <button
-                style={{ padding: '10px 20px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-                onClick={handleClickAddToCart}
-              >
-                Comprar
-              </button>
-            </div>
+  const { productId } = useParams<{ productId?: string }>();
+  const parsedProductId = productId ? parseInt(productId) : undefined;
+  const product = parsedProductId !== undefined ? products.find((p) => p.id === parsedProductId) : undefined;
+
+  if (!product) {
+    return <div>Produto não encontrado!</div>;
+  }
+
+  const handleClickAddToCart = () => {
+    handleAddToCart(product);
+  };
+
+  return (
+    <div className="relative h-screen" style={{marginTop:'8%'}}>
+      <img src="/img/Frame 1.png" alt="Imagem de fundo" className="absolute inset-0 mx-auto object-cover" style={{ borderRadius: '80px', width: '80%', height: '60%', marginTop: '1%' }} />
+      <div className="absolute inset-0 mx-auto flex justify-center items-center" style={{ backgroundColor: '#fff', marginTop: '8%', width: '70%', height: '65%', borderRadius: '80px', opacity: '1' }}>
+        <div className="flex justify-center items-center w-1/3">
+          <div className="w-50 h-50 overflow-hidden" style={{ background: '#' }}>
+            <img src={product.image} alt={product.name} className="object-cover" />
           </div>
-          <p>{product.description}</p>
+        </div>
+        <div className="container w-1/3 text-center text-black">
+          <h2 className="text-2xl font-semibold mb-4">{product.name}</h2>
+          <p className="text-lg mb-4">Preço: R$ {product.price}</p>
+          <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mt-4" onClick={handleClickAddToCart}>Comprar</button>
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
 export default ProductDetailsPage;
