@@ -115,7 +115,6 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="min-h-screen">
-        {/* Nav */}
         <nav className="text-black p-8 bg-white" style={{ width: '100%', position: 'fixed', top: 0, zIndex: 999, padding: '10px 10% 0 10%' }}>
           <div className="container mx-auto flex justify-between items-center">
             <div className="flex items-center space-x-2">
@@ -166,9 +165,9 @@ const App: React.FC = () => {
                       ))}
                     </ul>
                     {cartItems.length > 0 && (
-                      <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 w-full">
-                        <Link to="/checkout">Comprar</Link>
-                      </button>
+                      <Link to="/checkout"><button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 w-full">
+                        Comprar
+                      </button></Link>
                     )}
                   </div>
                 )}
@@ -182,26 +181,21 @@ const App: React.FC = () => {
             path="/"
             element={
               <div>
-                {/* Seção de descrição do produto */}
                 <div className="relative h-screen" style={{ marginTop: '8%' }}>
                   <img src="/img/bg.webp" alt="Imagem de fundo" className="absolute inset-0 mx-auto object-cover unselectable" style={{ borderRadius: '80px', width: '80%', height: '60%', marginTop: '1%' }} />
                   <div className="absolute inset-0 mx-auto flex justify-center items-center" style={{ backgroundColor: '#fff', marginTop: '8%', width: '70%', height: '65%', borderRadius: '80px', opacity: '1' }}>
-                    {/* Descrição do Produto */}
                     <div className="container mx-auto w-1/4 text-center text-black">
                       <h2 className="text-2xl font-semibold mb-4">Descrição do Produto</h2>
                       <p className="text-lg mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis scelerisque ex ut augue congue.</p>
                     </div>
-                    {/* Imagem do Produto */}
                     <div className="flex justify-center items-center w-1/3">
                       <div className="w-50 h-50 rounded-full overflow-hidden" style={{ background: '#' }}>
                         <img src="/img/tenis.webp" alt="Imagem" className="object-cover unselectable" />
                       </div>
                     </div>
-                    {/* Informações adicionais do Produto */}
                     <div className="w-1/3 flex flex-col justify-center items-center">
                       <h2 className="text-2xl font-semibold mb-4">Preço</h2>
                       <p className="text-lg mb-4">R$ 99,99</p>
-                      {/* Seletor de cores */}
                       <div className="flex items-center justify-between w-32">
                         <div
                           className={`bg-red-500 w-8 h-8 rounded-full ${selectedColor === 'red' ? 'border-2 border-black' : ''}`}
@@ -268,7 +262,6 @@ const App: React.FC = () => {
               </div>
             }
           />
-          {/* rotas */}
           <Route
             path="/produtos/:productId"
             element={<ProductDetailsPage products={products} handleAddToCart={handleAddToCart} handleAddToFavorites={handleAddToFavorites} favoriteStatus={favoriteStatus} />}
