@@ -1,46 +1,52 @@
-# Gettin Started with Create React App
+# Documentação do Projeto
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introdução
 
-## Available Scripts
+Este é um projeto de uma aplicação de comércio eletrônico desenvolvida em React, utilizando Tailwind CSS para estilização.
 
-In the project directory, you can run:
+## Visão Geral do Projeto
 
-### `npm start`
+A aplicação consiste em um catálogo de produtos, onde os usuários podem visualizar detalhes dos produtos, adicioná-los ao carrinho de compras, favoritá-los e proceder ao checkout.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Funcionalidades Principais
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. **Catálogo de Produtos:** Os usuários podem visualizar uma lista de produtos disponíveis.
+2. **Detalhes do Produto:** Cada produto tem uma página de detalhes com informações adicionais.
+3. **Carrinho de Compras:** Os usuários podem adicionar produtos ao carrinho de compras, ajustar as quantidades e finalizar a compra.
+4. **Favoritos:** Os usuários podem adicionar produtos aos favoritos para acesso rápido.
+5. **Checkout:** O checkout permite aos usuários revisar e finalizar suas compras.
 
-### `npm test`
+## Tecnologias Utilizadas
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React
+- React Router
+- TypeScript
+- Tailwind CSS
 
-### `npm run build`
+## Estrutura do Projeto
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- `src/`
+  - `assets/`: Contém arquivos estáticos, como imagens.
+  - `components/`: Componentes React reutilizáveis.
+  - `pages/`: Páginas da aplicação, organizadas por rota.
+  - `index.css`: Estilos globais da aplicação.
+  - `index.tsx`: Ponto de entrada da aplicação.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Instalação e Execução
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clone este repositório.
+2. Navegue até o diretório do projeto.
+3. Execute `npm install` para instalar as dependências.
+4. Execute `npm start` para iniciar a aplicação localmente.
 
-### `npm run eject`
+## Contribuição
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request com melhorias, correções de bugs, ou novas funcionalidades.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Autor
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+[Seu Nome](URL do seu perfil no GitHub)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Licença
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Este projeto está licenciado sob a [Licença MIT](URL da licença).

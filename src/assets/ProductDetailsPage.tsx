@@ -39,7 +39,7 @@ const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({ products, handl
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <img src="/img/Frame 1.png" alt="Imagem de fundo" className="absolute inset-0 object-cover" style={{ borderRadius: '80px', width: '30%', height: '70%', marginTop: '10%', marginLeft: '20%' }} />
+      <img src="/img/bg.webp" alt="Imagem de fundo" className="absolute inset-0 object-cover" style={{ borderRadius: '80px', width: '30%', height: '70%', marginTop: '10%', marginLeft: '20%' }} />
       <div className="absolute flex justify-center items-center" style={{ backgroundColor: '#fff', marginTop: '6%', width: '50%', height: '50%', borderRadius: '80px', opacity: '1' }}>
         <div className="flex justify-center items-center w-1/3">
           <div className="w-50 h-50 overflow-hidden" style={{ background: '#' }}>

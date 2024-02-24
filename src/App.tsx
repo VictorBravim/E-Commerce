@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import './index.css';
 import { FaHeart, FaShoppingCart, FaBoxes, FaRegHeart } from 'react-icons/fa';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import './index.css';
 import ProductDetailsPage from './assets/ProductDetailsPage';
 import FavoritesPage from './assets/FavoritesPage';
 import CheckoutPage from './assets/CheckoutPage';
@@ -101,9 +101,9 @@ const App: React.FC = () => {
   };
 
   const products: Product[] = [
-    { id: 1, name: 'Produto 1', price: 10, image: "/img/tenis.png", quantity: 0 },
-    { id: 2, name: 'Produto 2', price: 15, image: "/img/tenis.png", quantity: 0 },
-    { id: 3, name: 'Produto 3', price: 20, image: "/img/tenis.png", quantity: 0 }
+    { id: 1, name: 'Produto 1', price: 10, image: "/img/tenis.webp", quantity: 0 },
+    { id: 2, name: 'Produto 2', price: 15, image: "/img/tenis.webp", quantity: 0 },
+    { id: 3, name: 'Produto 3', price: 20, image: "/img/tenis.webp", quantity: 0 }
   ];
 
   const [selectedColor, setSelectedColor] = useState<string>('');
@@ -184,7 +184,7 @@ const App: React.FC = () => {
               <div>
                 {/* Seção de descrição do produto */}
                 <div className="relative h-screen" style={{ marginTop: '8%' }}>
-                  <img src="/img/Frame 1.png" alt="Imagem de fundo" className="absolute inset-0 mx-auto object-cover unselectable" style={{ borderRadius: '80px', width: '80%', height: '60%', marginTop: '1%' }} />
+                  <img src="/img/bg.webp" alt="Imagem de fundo" className="absolute inset-0 mx-auto object-cover unselectable" style={{ borderRadius: '80px', width: '80%', height: '60%', marginTop: '1%' }} />
                   <div className="absolute inset-0 mx-auto flex justify-center items-center" style={{ backgroundColor: '#fff', marginTop: '8%', width: '70%', height: '65%', borderRadius: '80px', opacity: '1' }}>
                     {/* Descrição do Produto */}
                     <div className="container mx-auto w-1/4 text-center text-black">
@@ -194,7 +194,7 @@ const App: React.FC = () => {
                     {/* Imagem do Produto */}
                     <div className="flex justify-center items-center w-1/3">
                       <div className="w-50 h-50 rounded-full overflow-hidden" style={{ background: '#' }}>
-                        <img src="/img/tenis.png" alt="Imagem" className="object-cover unselectable" />
+                        <img src="/img/tenis.webp" alt="Imagem" className="object-cover unselectable" />
                       </div>
                     </div>
                     {/* Informações adicionais do Produto */}
@@ -219,7 +219,7 @@ const App: React.FC = () => {
                       <div className="w-1/3 text-center">
                         <button
                           className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mt-4"
-                          onClick={() => handleAddToCart({ id: 1, name: 'Produto 1', price: 10, image: "/img/tenis.png", quantity: 0 })}
+                          onClick={() => handleAddToCart({ id: 1, name: 'Produto 1', price: 10, image: "/img/tenis.webp", quantity: 0 })}
                         >
                           Comprar
                         </button>
