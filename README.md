@@ -1,6 +1,6 @@
 # E-commerce
 
-
+![Sem título](https://github.com/VictorBravim/E-Commerce/assets/122113588/ad1260db-ddeb-4a98-bd24-6b35ec3615a2)
 
 ## <code>Introdução</code>
 
@@ -47,7 +47,7 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou env
 
 ## <code>Autor</code>
 
-[Seu Nome](URL do seu perfil no GitHub)
+[Victor Bravim](https://github.com/VictorBravim)
 
 ## <code>Licença</code>
 
