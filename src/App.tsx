@@ -162,7 +162,7 @@ const App: React.FC = () => {
                               </svg>
                             </button>
                           </div>
-                        </li>
+                        </li> 
                       ))}
                     </ul>
                     {cartItems.length > 0 && (
@@ -184,7 +184,7 @@ const App: React.FC = () => {
               <div>
                 {/* Seção de descrição do produto */}
                 <div className="relative h-screen" style={{ marginTop: '8%' }}>
-                  <img src="/img/Frame 1.png" alt="Imagem de fundo" className="absolute inset-0 mx-auto object-cover" style={{ borderRadius: '80px', width: '80%', height: '60%', marginTop: '1%' }} />
+                  <img src="/img/Frame 1.png" alt="Imagem de fundo" className="absolute inset-0 mx-auto object-cover unselectable" style={{ borderRadius: '80px', width: '80%', height: '60%', marginTop: '1%' }} />
                   <div className="absolute inset-0 mx-auto flex justify-center items-center" style={{ backgroundColor: '#fff', marginTop: '8%', width: '70%', height: '65%', borderRadius: '80px', opacity: '1' }}>
                     {/* Descrição do Produto */}
                     <div className="container mx-auto w-1/4 text-center text-black">
@@ -194,7 +194,7 @@ const App: React.FC = () => {
                     {/* Imagem do Produto */}
                     <div className="flex justify-center items-center w-1/3">
                       <div className="w-50 h-50 rounded-full overflow-hidden" style={{ background: '#' }}>
-                        <img src="/img/tenis.png" alt="Imagem" className="object-cover" />
+                        <img src="/img/tenis.png" alt="Imagem" className="object-cover unselectable" />
                       </div>
                     </div>
                     {/* Informações adicionais do Produto */}
@@ -240,7 +240,7 @@ const App: React.FC = () => {
                     {products.map((product) => (
                       <div key={product.id} className="bg-white p-6 rounded-lg shadow-md cursor-pointer flex flex-col justify-center items-center">
                         <Link to={`/produtos/${product.id}`} className="block">
-                          <img src={product.image} alt={product.name} className="w-64 h-64 mb-4 rounded-lg" />
+                          <img src={product.image} alt={product.name} className="w-64 h-64 mb-4 rounded-lg unselectable" />
                           <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
                           <p className="text-gray-600">R$ {product.price}</p>
                         </Link>

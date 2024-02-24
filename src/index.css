@@ -21,6 +21,10 @@ code {
   width: 0px;
 }
 
+.unselectable {
+  user-select: none;
+}
+
 /* Adicione isso ao seu arquivo CSS */
 .heart-icon {
   transition: transform 0.3s ease-in-out;
