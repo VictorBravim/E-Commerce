@@ -39,6 +39,8 @@ const App: React.FC = () => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }, [favorites]);
 
+  const [isFavoriteAdded, setIsFavoriteAdded] = useState(false);
+
   const handleAddToCart = (product: Product) => {
     const existingItemIndex = cartItems.findIndex((item) => item.id === product.id);
 
@@ -65,6 +67,11 @@ const App: React.FC = () => {
 
     if (!isProductInFavorites) {
       setFavorites([...favorites, product]);
+      setIsFavoriteAdded(true);
+
+      setTimeout(() => {
+        setIsFavoriteAdded(false);
+      }, 1000);
     }
   };
 
@@ -103,7 +110,9 @@ const App: React.FC = () => {
               <li><Link to="/contato" className="hover:text-gray-400 font-semibold" style={{ fontSize: '24px' }}>Contato</Link></li>
             </ul>
             <div className="flex items-center space-x-4" style={{ paddingLeft: '5%' }}>
-              <Link to="/favoritos" style={{ fontSize: '24px' }}><FaHeart /></Link>
+              <Link to="/favoritos" style={{ fontSize: '24px' }}>
+                <FaHeart className={isFavoriteAdded ? 'heart-icon animated' : 'heart-icon'} />
+              </Link>
               <div className="relative">
                 <div style={{ border: '2px solid white', borderRadius: '50%', padding: '10px' }}>
                   <FaShoppingCart style={{ cursor: 'pointer', fontSize: '24px' }} onClick={() => setIsCartOpen(!isCartOpen)} />
@@ -194,10 +203,8 @@ const App: React.FC = () => {
                         >
                           Comprar
                         </button>
-
                       </div>
                     </div>
-
                   </div>
                   <div className="absolute flex" style={{ width: '100%', marginTop: '3.5%' }}>
                     <div className="container mx-auto flex justify-between text-black" style={{ width: '65%' }}>
