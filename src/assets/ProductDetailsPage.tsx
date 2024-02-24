@@ -29,9 +29,9 @@ const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({ products, handl
   };
 
   return (
-    <div className="relative h-screen" style={{marginTop:'8%'}}>
-      <img src="/img/Frame 1.png" alt="Imagem de fundo" className="absolute inset-0 mx-auto object-cover" style={{ borderRadius: '80px', width: '80%', height: '60%', marginTop: '1%' }} />
-      <div className="absolute inset-0 mx-auto flex justify-center items-center" style={{ backgroundColor: '#fff', marginTop: '8%', width: '70%', height: '65%', borderRadius: '80px', opacity: '1' }}>
+    <div className="flex justify-center items-center h-screen">
+      <img src="/img/Frame 1.png" alt="Imagem de fundo" className="absolute inset-0 object-cover" style={{ borderRadius: '80px', width: '30%', height: '70%', marginTop: '10%', marginLeft:'20%' }} />
+      <div className="absolute flex justify-center items-center" style={{ backgroundColor: '#fff', marginTop: '6%', width: '50%', height: '50%', borderRadius: '80px', opacity: '1' }}>
         <div className="flex justify-center items-center w-1/3">
           <div className="w-50 h-50 overflow-hidden" style={{ background: '#' }}>
             <img src={product.image} alt={product.name} className="object-cover" />
