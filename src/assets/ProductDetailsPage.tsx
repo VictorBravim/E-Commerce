@@ -7,7 +7,7 @@ interface Product {
   price: number;
   description?: string;
   image: string;
-  quantity: number; 
+  quantity: number;
 }
 
 interface ProductDetailsPageProps {
@@ -18,24 +18,19 @@ interface ProductDetailsPageProps {
 }
 
 const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({ products, handleAddToCart, handleAddToFavorites, favoriteStatus }) => {
-  // Obtém o ID do produto da URL ou define como -1 se não houver ID
   const { productId } = useParams<{ productId?: string }>();
   const parsedProductId = productId ? parseInt(productId) : -1;
 
-  // Encontra o produto com o ID correspondente
   const product = products.find(p => p.id === parsedProductId);
 
-  // Verifica se o produto existe
   if (!product) {
     return <div>Produto não encontrado!</div>;
   }
 
-  // Função para adicionar o produto ao carrinho
   const handleClickAddToCart = () => {
     handleAddToCart(product);
   };
 
-  // Função para adicionar o produto aos favoritos
   const handleClickAddToFavorites = () => {
     if (handleAddToFavorites && favoriteStatus) {
       handleAddToFavorites(product);
@@ -44,7 +39,7 @@ const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({ products, handl
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <img src="/img/Frame 1.png" alt="Imagem de fundo" className="absolute inset-0 object-cover" style={{ borderRadius: '80px', width: '30%', height: '70%', marginTop: '10%', marginLeft:'20%' }} />
+      <img src="/img/Frame 1.png" alt="Imagem de fundo" className="absolute inset-0 object-cover" style={{ borderRadius: '80px', width: '30%', height: '70%', marginTop: '10%', marginLeft: '20%' }} />
       <div className="absolute flex justify-center items-center" style={{ backgroundColor: '#fff', marginTop: '6%', width: '50%', height: '50%', borderRadius: '80px', opacity: '1' }}>
         <div className="flex justify-center items-center w-1/3">
           <div className="w-50 h-50 overflow-hidden" style={{ background: '#' }}>

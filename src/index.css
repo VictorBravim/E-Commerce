@@ -25,7 +25,6 @@ code {
   user-select: none;
 }
 
-/* Adicione isso ao seu arquivo CSS */
 .heart-icon {
   transition: transform 0.3s ease-in-out;
 }
@@ -38,9 +37,11 @@ code {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.2);
   }
+
   100% {
     transform: scale(1);
   }

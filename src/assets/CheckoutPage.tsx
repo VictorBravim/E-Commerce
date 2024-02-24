@@ -15,9 +15,7 @@ interface CheckoutPageProps {
 
 const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, closeCart }) => {
   useEffect(() => {
-    // Verifica se closeCart está definido antes de chamá-lo
     if (closeCart) {
-      // Fecha o carrinho quando o componente é montado
       closeCart();
     }
   }, [closeCart]);

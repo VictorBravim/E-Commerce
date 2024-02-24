@@ -76,7 +76,7 @@ const App: React.FC = () => {
   const handleCloseCart = () => {
     setIsCartOpen(false);
   };
-  
+
   const handleAddToFavorites = (product: Product) => {
     const isProductInFavorites = favorites.some((favProduct) => favProduct.id === product.id);
 
@@ -162,12 +162,12 @@ const App: React.FC = () => {
                               </svg>
                             </button>
                           </div>
-                        </li> 
+                        </li>
                       ))}
                     </ul>
                     {cartItems.length > 0 && (
                       <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 w-full">
-                       <Link to="/checkout">Comprar</Link>
+                        <Link to="/checkout">Comprar</Link>
                       </button>
                     )}
                   </div>
@@ -270,14 +270,13 @@ const App: React.FC = () => {
           />
           {/* rotas */}
           <Route
-          path="/produtos/:productId"
-          element={<ProductDetailsPage products={products} handleAddToCart={handleAddToCart} handleAddToFavorites={handleAddToFavorites} favoriteStatus={favoriteStatus} />}
-        />
+            path="/produtos/:productId"
+            element={<ProductDetailsPage products={products} handleAddToCart={handleAddToCart} handleAddToFavorites={handleAddToFavorites} favoriteStatus={favoriteStatus} />}
+          />
           <Route
             path="/favoritos"
             element={<FavoritesPage favorites={favorites} onRemoveFavorite={handleRemoveFavorite} onAddToCart={handleAddToCart} />}
           />
-          
           <Route path="/checkout" element={<CheckoutPage cartItems={cartItems} closeCart={handleCloseCart} />} />
         </Routes>
       </div>

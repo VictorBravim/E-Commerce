@@ -13,8 +13,8 @@ interface Product {
 
 interface FavoritesPageProps {
   favorites: Product[];
-  onRemoveFavorite: (id: number) => void; 
-  onAddToCart: (product: Product) => void; // Adicionando a propriedade onAddToCart
+  onRemoveFavorite: (id: number) => void;
+  onAddToCart: (product: Product) => void;
 }
 
 const FavoritesPage: React.FC<FavoritesPageProps> = ({ favorites, onRemoveFavorite, onAddToCart }) => {
@@ -22,7 +22,7 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ favorites, onRemoveFavori
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       {favorites.map((favorite) => (
         <div key={favorite.id} style={{ margin: '10px', textAlign: 'center' }}>
-          <div onClick={() => onRemoveFavorite(favorite.id)}> 
+          <div onClick={() => onRemoveFavorite(favorite.id)}>
             <img src={favorite.image} alt={favorite.name} style={{ width: '100px', height: '100px' }} />
           </div>
           <div>
