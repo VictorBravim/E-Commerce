@@ -1,6 +1,6 @@
 # E-commerce
 
-![Sem título](https://github.com/VictorBravim/E-Commerce/assets/122113588/ad1260db-ddeb-4a98-bd24-6b35ec3615a2)
+![Sem título 1](https://github.com/VictorBravim/E-Commerce/assets/122113588/bfeb7a02-b621-40be-8c70-b5a3cb47caf7)
 
 ## <code>Introdução</code>
 
