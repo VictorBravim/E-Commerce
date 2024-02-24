@@ -1,5 +1,5 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 interface Product {
   id: number;
@@ -13,19 +13,33 @@ interface Product {
 interface ProductDetailsPageProps {
   products: Product[];
   handleAddToCart: (product: Product) => void;
+  handleAddToFavorites?: (product: Product) => void;
+  favoriteStatus?: { [key: number]: boolean };
 }
 
-const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({ products, handleAddToCart }) => {
+const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({ products, handleAddToCart, handleAddToFavorites, favoriteStatus }) => {
+  // Obtém o ID do produto da URL ou define como -1 se não houver ID
   const { productId } = useParams<{ productId?: string }>();
-  const parsedProductId = productId ? parseInt(productId) : undefined;
-  const product = parsedProductId !== undefined ? products.find((p) => p.id === parsedProductId) : undefined;
+  const parsedProductId = productId ? parseInt(productId) : -1;
 
+  // Encontra o produto com o ID correspondente
+  const product = products.find(p => p.id === parsedProductId);
+
+  // Verifica se o produto existe
   if (!product) {
     return <div>Produto não encontrado!</div>;
   }
 
+  // Função para adicionar o produto ao carrinho
   const handleClickAddToCart = () => {
     handleAddToCart(product);
+  };
+
+  // Função para adicionar o produto aos favoritos
+  const handleClickAddToFavorites = () => {
+    if (handleAddToFavorites && favoriteStatus) {
+      handleAddToFavorites(product);
+    }
   };
 
   return (
@@ -41,6 +55,11 @@ const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({ products, handl
           <h2 className="text-2xl font-semibold mb-4">{product.name}</h2>
           <p className="text-lg mb-4">Preço: R$ {product.price}</p>
           <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mt-4" onClick={handleClickAddToCart}>Comprar</button>
+          {handleAddToFavorites && favoriteStatus && (
+            <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 mt-4" onClick={handleClickAddToFavorites}>
+              {favoriteStatus[product.id] ? <FaHeart /> : <FaRegHeart />}
+            </button>
+          )}
         </div>
       </div>
     </div>

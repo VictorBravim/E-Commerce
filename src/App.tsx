@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaHeart, FaShoppingCart, FaBoxes } from 'react-icons/fa';
+import { FaHeart, FaShoppingCart, FaBoxes, FaRegHeart } from 'react-icons/fa';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './index.css';
 import ProductDetailsPage from './assets/ProductDetailsPage';
@@ -25,6 +25,16 @@ const App: React.FC = () => {
     const savedFavorites = localStorage.getItem('favorites');
     return savedFavorites ? JSON.parse(savedFavorites) : [];
   });
+
+  const [favoriteStatus, setFavoriteStatus] = useState<{ [key: number]: boolean }>({});
+
+  useEffect(() => {
+    const initialFavoriteStatus: { [key: number]: boolean } = {};
+    favorites.forEach((favorite) => {
+      initialFavoriteStatus[favorite.id] = true;
+    });
+    setFavoriteStatus(initialFavoriteStatus);
+  }, [favorites]);
 
   useEffect(() => {
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
@@ -65,8 +75,13 @@ const App: React.FC = () => {
   const handleAddToFavorites = (product: Product) => {
     const isProductInFavorites = favorites.some((favProduct) => favProduct.id === product.id);
 
-    if (!isProductInFavorites) {
+    if (isProductInFavorites) {
+      const updatedFavorites = favorites.filter((favorite) => favorite.id !== product.id);
+      setFavorites(updatedFavorites);
+      setFavoriteStatus({ ...favoriteStatus, [product.id]: false });
+    } else {
       setFavorites([...favorites, product]);
+      setFavoriteStatus({ ...favoriteStatus, [product.id]: true });
       setIsFavoriteAdded(true);
 
       setTimeout(() => {
@@ -74,6 +89,8 @@ const App: React.FC = () => {
       }, 1000);
     }
   };
+
+
 
   const handleRemoveFavorite = (id: number) => {
     const updatedFavorites = favorites.filter((favorite) => favorite.id !== id);
@@ -238,7 +255,7 @@ const App: React.FC = () => {
                             onClick={() => handleAddToFavorites(product)}
                             className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors duration-300"
                           >
-                            <FaHeart />
+                            {favoriteStatus[product.id] ? <FaHeart /> : <FaRegHeart />}
                           </button>
                         </div>
                       </div>
@@ -249,8 +266,14 @@ const App: React.FC = () => {
             }
           />
           {/* rotas */}
-          <Route path="/produtos/:productId" element={<ProductDetailsPage products={products} handleAddToCart={handleAddToCart} />} />
-          <Route path="/favoritos" element={<FavoritesPage favorites={favorites} onRemoveFavorite={handleRemoveFavorite} />} />
+          <Route
+          path="/produtos/:productId"
+          element={<ProductDetailsPage products={products} handleAddToCart={handleAddToCart} handleAddToFavorites={handleAddToFavorites} favoriteStatus={favoriteStatus} />}
+        />
+          <Route
+            path="/favoritos"
+            element={<FavoritesPage favorites={favorites} onRemoveFavorite={handleRemoveFavorite} onAddToCart={handleAddToCart} />}
+          />
         </Routes>
       </div>
     </Router>
